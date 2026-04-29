@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Parapharmacie Opal — Luxury Care</title>
+  <meta name="description" content="Parapharmacie premium multilingue avec commande WhatsApp.">
+  <meta property="og:title" content="Parapharmacie Opal">
+  <meta property="og:description" content="L’élégance du soin, l’exigence de la confiance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="loader" class="loader">
+    <div class="logo-loader">
+      <span class="particle" style="left:20px;top:30px"></span><span class="particle" style="right:15px;top:75px;animation-delay:.5s"></span><span class="particle" style="left:120px;bottom:10px;animation-delay:1s"></span>
+      <h1 class="serif">OPAL</h1><p>Luxury care is loading</p>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay"></div>
+
+  <aside id="loginPanel" class="admin-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <img id="adminBrandLogo" src="assets/opal-logo.svg" style="width:140px" alt="Opal">
+      <button class="icon-btn" onclick="closePanels()">×</button>
+    </div>
+    <h2 class="serif" style="font-size:44px">Admin Login</h2>
+    <p class="muted">Démo gratuite. Pour production, activer Supabase Auth + RLS.</p>
+    <input id="loginEmail" class="input" placeholder="Email" value="admin@opal.ma" style="margin-top:18px">
+    <input id="loginPass" class="input" placeholder="Mot de passe" type="password" value="Opal@2026" style="margin-top:12px">
+    <p id="loginError" style="color:#ff9090"></p>
+    <button id="loginBtn" class="btn" style="width:100%;margin-top:12px">Se connecter</button>
+  </aside>
+
+  <aside id="cart" class="cart-drawer">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 class="serif" style="font-size:44px" data-t="cart">Panier</h2>
+      <button id="closeCart" class="icon-btn">×</button>
+    </div>
+    <div id="cartItems"></div>
+    <div style="border-top:1px solid rgba(255,255,255,.12);padding-top:18px;margin-top:18px;display:flex;justify-content:space-between">
+      <span class="muted" data-t="total">Total estimé</span><strong id="cartTotal" class="price">0 MAD</strong>
+    </div>
+    <button id="checkout" class="btn" style="width:100%;margin-top:18px" data-t="checkout">Envoyer la commande WhatsApp</button>
+  </aside>
+
+  <div id="sitePage">
+    <header id="header" class="header">
+      <div class="container header-inner">
+        <a class="brand" href="#"><img id="brandLogo" src="assets/opal-logo.svg" alt="Opal"></a>
+        <nav class="nav">
+          <a href="#featured" data-t="products">Produits</a>
+          <a href="#story" data-t="story">Notre histoire</a>
+          <a href="#location" data-t="location">Localisation</a>
+          <button id="adminBtn" class="btn ghost" data-t="admin">Admin</button>
+        </nav>
+        <div class="actions">
+          <div class="langs">
+            <button class="lang-btn active" data-lang="fr">🇫🇷 FR</button>
+            <button class="lang-btn" data-lang="ar">🇲🇦 AR</button>
+            <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+          </div>
+          <button id="openCart" class="icon-btn">🛍️ <span id="cartCount">0</span></button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="kicker" data-t="heroK">Parapharmacie premium</div>
+        <h1 class="serif" data-t="heroT">L’élégance du soin, l’exigence de la confiance.</h1>
+        <p data-t="heroS">Une sélection raffinée de soins, beauté, bien-être et conseils experts — commandable directement via WhatsApp.</p>
+        <div class="cta">
+          <a class="btn" href="#featured" data-t="discover">Découvrir nos produits</a>
+          <button class="btn ghost" onclick="openCart()" data-t="wa">Commander via WhatsApp</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="section">
+      <div class="container story-grid">
+        <div class="story-img glass"><img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1000&q=85" alt="Opal story"></div>
+        <div>
+          <div class="kicker" data-t="storyK">Brand Story</div>
+          <h2 class="section-title" data-t="storyT">Une maison de soin pensée avec exigence.</h2>
+          <p id="storyText" class="muted" style="font-size:18px"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="kicker">Categories</div>
+        <h2 class="section-title" data-t="cats">Univers Opal</h2>
+        <div id="categories" class="categories"></div>
+      </div>
+    </section>
+
+    <section id="featured" class="section">
+      <div class="container">
+        <div class="kicker">Opal Selection</div>
+        <h2 class="section-title" data-t="featured">Produits vedettes</h2>
+        <input id="search" class="input" data-t-placeholder="search" placeholder="Rechercher un soin..." style="max-width:460px">
+        <div id="filters" class="filters"></div>
+        <div id="productsGrid" class="products"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="quiz-box glass">
+          <div class="kicker">Opal Quiz</div>
+          <h2 class="section-title" data-t="quizT">Trouvez votre routine beauté</h2>
+          <p class="muted" data-t="quizS">Répondez à 3 questions rapides et découvrez une sélection recommandée.</p>
+          <button id="quizBtn" class="btn" data-t="start">Lancer le quiz</button>
+          <div id="quizResults" class="products hidden" style="margin-top:28px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title" data-t="why">Pourquoi Opal</h2>
+        <div class="pillars">
+          <article class="card glass"><div class="ico">🛡️</div><h3 class="serif">Authenticité</h3><p class="muted">Produits sélectionnés avec exigence.</p></article>
+          <article class="card glass"><div class="ico">🏆</div><h3 class="serif">Expertise</h3><p class="muted">Conseil clair et responsable.</p></article>
+          <article class="card glass"><div class="ico">💎</div><h3 class="serif">Qualité</h3><p class="muted">Une expérience premium jusque dans les détails.</p></article>
+          <article class="card glass"><div class="ico">🤝</div><h3 class="serif">Service</h3><p class="muted">Commande simple via WhatsApp.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="location" class="section">
+      <div class="container map-grid">
+        <div class="glass card">
+          <div class="kicker">Visit Opal</div>
+          <h2 class="section-title" data-t="locT">Localisation & horaires</h2>
+          <div class="status"><span id="statusDot" class="dot open"></span><strong id="statusLabel">Ouvert maintenant</strong></div>
+          <p id="addressText" class="muted"></p>
+          <div id="hoursList"></div>
+        </div>
+        <div class="glass" style="border-radius:30px;overflow:hidden"><iframe id="mapFrame" class="map" loading="lazy"></iframe></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div><div class="brand">OPAL</div><p class="muted">Parapharmacie Opal — Luxury Care</p></div>
+        <div><p>+212 600 000 000</p><p>contact@opal.ma</p><p>© 2026 Parapharmacie Opal</p></div>
+      </div>
+    </footer>
+  </div>
+
+  <main id="adminPage" class="admin-page">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+        <div><div class="kicker">Opal Admin</div><h1 class="serif" style="font-size:64px;margin:0" data-t="dashboard">Dashboard</h1></div>
+        <div><button id="backSite" class="btn ghost">Voir le site</button> <button id="logoutBtn" class="btn ghost">Déconnexion</button></div>
+      </div>
+      <div class="admin-layout">
+        <aside class="admin-sidebar glass">
+          <button class="admin-tab active" data-tab="dashboard">📊 Dashboard</button>
+          <button class="admin-tab" data-tab="products">📦 Produits</button>
+          <button class="admin-tab" data-tab="branding">🖼️ Logo & Branding</button>
+          <button class="admin-tab" data-tab="settings">🏪 Informations</button>
+        </aside>
+        <section class="admin-content glass">
+          <div id="admin-dashboard" class="admin-section"><div id="adminStats" class="pillars"></div></div>
+          <div id="admin-products" class="admin-section hidden">
+            <h2 class="serif" style="font-size:44px">Produits</h2>
+            <div id="productForm" class="grid2">
+              <input id="prodId" type="hidden">
+              <input id="prodNameFr" class="input" placeholder="Nom FR">
+              <input id="prodNameAr" class="input" placeholder="Nom AR">
+              <input id="prodNameEn" class="input" placeholder="Nom EN">
+              <input id="prodBrand" class="input" placeholder="Marque">
+              <input id="prodPrice" class="input" placeholder="Prix MAD" type="number">
+              <select id="prodCat" class="input"><option value="face">Soins visage</option><option value="body">Corps</option><option value="hair">Cheveux</option><option value="baby">Bébé</option><option value="solar">Solaire</option></select>
+              <select id="prodBadge" class="input"><option value="">Badge</option><option value="new">New</option><option value="bestseller">Bestseller</option><option value="promo">Promo</option><option value="expert">Expert</option></select>
+              <input id="prodImg" class="input" placeholder="URL image">
+              <textarea id="prodDescFr" class="input" placeholder="Description FR"></textarea>
+              <textarea id="prodDescAr" class="input" placeholder="Description AR"></textarea>
+              <textarea id="prodDescEn" class="input" placeholder="Description EN"></textarea>
+            </div>
+            <p><button id="saveProduct" class="btn">Sauvegarder produit</button> <button id="clearProduct" class="btn ghost">Nouveau</button></p>
+            <table class="table"><thead><tr><th>Produit</th><th>Marque</th><th>Prix</th><th>Catégorie</th><th>Actions</th></tr></thead><tbody id="adminProductsTable"></tbody></table>
+          </div>
+          <div id="admin-branding" class="admin-section hidden">
+            <h2 class="serif" style="font-size:44px">Logo & Branding</h2>
+            <input id="setLogo" class="input" placeholder="URL logo ou assets/opal-logo.svg">
+            <input id="setAccent" class="input" type="color" style="margin-top:12px;height:54px">
+            <p class="muted">Pour une vraie production, upload vers Supabase Storage bucket opal-assets.</p>
+            <button id="saveSettings" class="btn">Sauvegarder</button>
+          </div>
+          <div id="admin-settings" class="admin-section hidden">
+            <h2 class="serif" style="font-size:44px">Informations pharmacie</h2>
+            <input id="setWhatsapp" class="input" placeholder="Numéro WhatsApp">
+            <input id="setMaps" class="input" placeholder="Google Maps embed URL" style="margin-top:12px">
+            <p><button id="saveSettings" class="btn">Sauvegarder</button> <button id="resetDemo" class="btn ghost">Reset démo</button></p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
